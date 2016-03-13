@@ -1,6 +1,6 @@
 package com.organics;
 
-import com.organics.service.Search;
+import com.organics.service.Service;
 
 import java.io.IOException;
 
@@ -9,10 +9,10 @@ import java.io.IOException;
  */
 public class Console {
     public static void main(String[] args) throws IOException {
-//        DockerSearch getSearch = new DockerSearch() {};
-//        System.out.println(getSearch.SearchAll());
+//        DockerSearch service = new DockerSearch() {};
+//        System.out.println(service.SearchAll());
 
-        Search search = new Search();
-        search.searchStats();
+        Service service = new Service();
+        service.searchStats();
     }
 }
