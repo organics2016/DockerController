@@ -9,7 +9,7 @@ import java.io.IOException;
  */
 public class Console {
     public static void main(String[] args) throws IOException {
-//        DockerSearch service = new DockerSearch() {};
+//        DockerSearchStats service = new DockerSearchStats() {};
 //        System.out.println(service.SearchAll());
 
         Service service = new Service();

@@ -1,20 +1,29 @@
 package com.organics.service;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.organics.search.DockerSearch;
+import com.organics.cache.StatsCache;
+
+import java.util.Map;
+import java.util.concurrent.TransferQueue;
 
 /**
  * Created by organics on 2016/3/12.
  */
 public class Service {
 
+    private final TransferQueue<Map<String, String>> queue;
 
-    public String searchStats() {
-//        JSONArray containers = JSONObject.parseArray(dockerSearch.searchAll());
-//        containers.forEach(containerJson -> {
-//            System.out.println(dockerSearch.searchStats(JSONObject.parseObject(containerJson.toString()).getString("Id")));
-//        });
-        return null;
+    public Service() {
+        queue = StatsCache.getQueue();
+    }
+
+    public void start() {
+        new Thread(() -> {
+            try {
+                Map<String, String> map = queue.take();
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }
