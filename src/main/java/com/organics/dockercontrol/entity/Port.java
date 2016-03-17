@@ -1,4 +1,4 @@
-package com.organics.entity;
+package com.organics.dockercontrol.entity;
 
 import java.io.Serializable;
 

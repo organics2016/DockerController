@@ -1,4 +1,4 @@
-package com.organics.entity;
+package com.organics.dockercontrol.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +12,7 @@ public class Container implements Serializable {
     private String Image;
     private String ImageID;
     private List<Port> Ports;
+    private String Status;
 
     public String getId() {
         return Id;
@@ -43,5 +44,13 @@ public class Container implements Serializable {
 
     public void setPorts(List<Port> ports) {
         Ports = ports;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 }

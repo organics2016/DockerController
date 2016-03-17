@@ -1,6 +1,7 @@
-package com.organics.utils;
+package com.organics.dockercontrol.utils;
 
-import com.organics.config.ServiceConfig;
+
+import com.organics.dockercontrol.config.ServiceConfig;
 
 /**
  * Created by organics on 2016/3/12.

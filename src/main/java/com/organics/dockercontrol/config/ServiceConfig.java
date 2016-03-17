@@ -1,4 +1,4 @@
-package com.organics.config;
+package com.organics.dockercontrol.config;
 
 /**
  * Created by organics on 2016/3/12.
