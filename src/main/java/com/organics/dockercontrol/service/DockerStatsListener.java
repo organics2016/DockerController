@@ -8,6 +8,7 @@ import com.organics.dockercontrol.dto.StatsDto;
 import com.organics.dockercontrol.entity.CPU;
 import com.organics.dockercontrol.entity.Memory;
 import com.organics.dockercontrol.entity.Stats;
+import com.organics.dockercontrol.utils.Consts;
 import com.organics.dockercontrol.utils.DateUtils;
 import com.organics.dockercontrol.utils.MathUtils;
 import org.slf4j.Logger;
@@ -38,8 +39,8 @@ public class DockerStatsListener implements Runnable {
             while (true) {
                 for (int i = 0; i < ContainersCache.getIdPathAndImage().size(); i++) {
                     if (i == 0) {
-                        statsDao.save("================================================================================================");
-                        statsDao.save("date" + "\t\t\t\t\t\t" + "imageName" + "\t\t\t\t\t\t" + "cpu_usage" + "\t\t\t\t" + "memory_usage");
+                        statsDao.save("======================================================================================================");
+                        statsDao.save("host" + "\t\t\t\t" + "date" + "\t\t\t\t" + "cpu_usage" + "\t\t" + "memory_usage" + "\t\t" + "imageName");
                     }
                     queue.take().forEach((idPath, data) -> this.process(idPath, data));
                 }
@@ -69,6 +70,6 @@ public class DockerStatsListener implements Runnable {
         long usram = memory.getUsage();
         statsDto.setMemory_usage(MathUtils.conversions(usram).toString());
 
-        statsDao.save(DateUtils.formatStatsDate(statsDto.getDate()), statsDto.getImageName(), statsDto.getCpu_usage(), statsDto.getMemory_usage());
+        statsDao.save(Consts.allContainerPathToHost(idPath), DateUtils.formatStatsDate(statsDto.getDate()), statsDto.getCpu_usage(), statsDto.getMemory_usage(), statsDto.getImageName());
     }
 }

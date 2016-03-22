@@ -13,6 +13,7 @@ public class Container implements Serializable {
     private String ImageID;
     private List<Port> Ports;
     private String Status;
+    private String host;
 
     public String getId() {
         return Id;
@@ -52,5 +53,13 @@ public class Container implements Serializable {
 
     public void setStatus(String status) {
         Status = status;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 }

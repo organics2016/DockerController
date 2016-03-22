@@ -23,6 +23,7 @@ public class ContainersCache {
      * 用于获取Docker容器的状态信息
      */
     private static final TransferQueue<Map<String, String>> queue = new LinkedTransferQueue<>();
+
     /**
      * 缓存容器ID的URL和images字符串,以便通过URL取到images
      */

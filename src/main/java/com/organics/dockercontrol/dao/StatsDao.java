@@ -28,15 +28,7 @@ public interface StatsDao {
             for (int i = 0; i < args.length; i++) {
                 sb.append(args[i]);
                 if (i != args.length - 1) {
-                    if (args[i].length() <= 29) {
-                        sb.append("\t\t\t\t");
-                    } else if (args[i].length() <= 38) {
-                        sb.append("\t\t\t");
-                    } else if (args[i].length() >= 49) {
-                        sb.append("\t");
-                    } else {
-                        sb.append("\t\t");
-                    }
+                    sb.append("\t\t");
                 }
             }
             System.out.println(sb.toString());
@@ -46,26 +38,5 @@ public interface StatsDao {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    default void print(String... args) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < args.length; i++) {
-            sb.append(args[i]);
-            if (i != args.length - 1) {
-                if (args[i].length() <= 29) {
-                    sb.append("\t\t\t\t\t\t\t");
-                } else if (args[i].length() <= 38) {
-                    sb.append("\t\t\t\t\t");
-                } else if (args[i].length() >= 45 && args[i].length() < 51) {
-                    sb.append("\t\t\t");
-                } else if (args[i].length() >= 51) {
-                    sb.append("\t\t");
-                } else {
-                    sb.append("\t\t\t\t");
-                }
-            }
-        }
-        System.out.println(sb.toString());
     }
 }
