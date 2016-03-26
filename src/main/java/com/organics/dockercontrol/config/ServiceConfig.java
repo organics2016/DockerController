@@ -15,7 +15,6 @@ public class ServiceConfig {
             throw new RuntimeException("docker host error");
         }
 
-
         return Arrays.asList(dockerHost.split(";"));
     }
 }
