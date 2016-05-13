@@ -1,6 +1,8 @@
 package com.organics.dockercontrol.search;
 
 import com.organics.dockercontrol.cache.ContainersCache;
+import com.organics.dockercontrol.utils.Consts;
+import com.organics.dockercontrol.utils.OutputUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -21,7 +23,7 @@ public abstract class Search {
 
     private static final Logger logger = LoggerFactory.getLogger(Search.class);
 
-    public void search(final String path, final boolean isAbort) {
+    public void search(final String path) {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             // 创建httpget.
             HttpGet httpget = new HttpGet(path);
@@ -30,32 +32,28 @@ public abstract class Search {
             try (CloseableHttpResponse response = httpclient.execute(httpget)) {
                 // 获取响应实体
                 HttpEntity entity = response.getEntity();
-                if (isAbort) {
-                    httpget.abort();
-                }
+
                 if (entity != null) {
-                    this.searchProcess(path, entity);
+                    this.searchProcess(path, entity, httpget);
                 }
             } catch (SocketTimeoutException e) {
                 String imageName = ContainersCache.getIdPathAndImage().remove(path);
-                logger.warn("This service is dead imageName : [{}]", imageName);
+                OutputUtils.save("Warning ! This service is dead the host : [" + Consts.allContainerPathToHost(path) + "], imageName : [" + imageName + "]");
+                logger.warn("This service is dead the host : [{}] , imageName : [{}]", Consts.allContainerPathToHost(path), imageName);
             } catch (InterruptedException e) {
                 logger.error("error :", e);
             }
         } catch (HttpHostConnectException e) {
+            OutputUtils.save("Warning ! Connect to (" + path + ") failed");
             logger.warn("Connect to ({}) failed", path);
         } catch (IOException e) {
             logger.error("error :", e);
         }
     }
 
-    public void search(final String path) {
-        this.search(path, false);
-    }
-
     private RequestConfig getRequestConfig() {
         return RequestConfig.custom().setSocketTimeout(5000).build();
     }
 
-    protected abstract void searchProcess(final String path, final HttpEntity entity) throws IOException, InterruptedException;
+    protected abstract void searchProcess(final String path, final HttpEntity entity, HttpGet httpget) throws IOException, InterruptedException;
 }

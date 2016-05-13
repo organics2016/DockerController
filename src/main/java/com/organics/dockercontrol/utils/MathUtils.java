@@ -1,7 +1,6 @@
 package com.organics.dockercontrol.utils;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
 /**
  * Created by wanghc on 2016/3/14.
@@ -19,11 +18,11 @@ public class MathUtils {
         BigDecimal bigDividend = BigDecimal.valueOf(dividend);
         BigDecimal bigDivisor = BigDecimal.valueOf(divisor);
         BigDecimal bigResult = bigDividend.divide(bigDivisor, 6, BigDecimal.ROUND_HALF_UP);
-        return bigResult.multiply(BigDecimal.valueOf(100L), new MathContext(2));
+        return bigResult.multiply(BigDecimal.valueOf(1000L)).setScale(3);
     }
 
     public static BigDecimal conversions(final long bytes) {
-        BigDecimal f = BigDecimal.valueOf(1024L);
-        return BigDecimal.valueOf(bytes).divide(f, 2, BigDecimal.ROUND_HALF_UP).divide(f, 2, BigDecimal.ROUND_HALF_UP);
+        BigDecimal f = BigDecimal.valueOf(1024L).pow(2);
+        return BigDecimal.valueOf(bytes).divide(f, 2, BigDecimal.ROUND_HALF_UP);
     }
 }

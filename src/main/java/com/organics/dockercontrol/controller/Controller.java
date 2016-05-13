@@ -7,6 +7,7 @@ import com.organics.dockercontrol.search.Search;
 import com.organics.dockercontrol.search.StatsSearch;
 import com.organics.dockercontrol.service.DockerStatsListener;
 import com.organics.dockercontrol.utils.Consts;
+import com.organics.dockercontrol.utils.OutputUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,8 +64,9 @@ public class Controller {
 
                 list.forEach(container -> {
                     if (idPathAndImage.get(Consts.getContainerStatsPath(container.getHost(), container.getId())) == null) {
-                        logger.warn("This Service is start the host [{}] , imageName : [{}]", container.getHost(), container.getImage());
                         idPathAndImage.put(Consts.getContainerStatsPath(container.getHost(), container.getId()), container.getImage());
+                        OutputUtils.save("Warning ! This Service is started the host : [" + container.getHost() + "] , imageName : [" + container.getImage() + "]");
+                        logger.warn("This Service is started the host [{}] , imageName : [{}]", container.getHost(), container.getImage());
                     }
                 });
             }
@@ -80,7 +82,7 @@ public class Controller {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                ContainersCache.getIdPathAndImage().keySet().forEach(idPath -> statsSearch.search(idPath, true));
+                ContainersCache.getIdPathAndImage().keySet().forEach(idPath -> statsSearch.search(idPath));
             }
         }, 500L, 500L);
     }
